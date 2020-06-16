@@ -1,13 +1,12 @@
 import logging
 import os
 import sys
-import pandas
 
 import azure.functions as func
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    logging.info('Python HTTP trigger1111111 function processed a request.')
 
     
 
