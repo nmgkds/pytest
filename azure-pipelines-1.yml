@@ -1,0 +1,59 @@
+resources:
+- repo: self
+queue:
+  name: Hosted Ubuntu 1604
+variables:
+  FunctionFolder: './'
+  FunctionAppName: 'zyfun7'
+steps:
+
+
+
+- task: AzureCLI@1
+  displayName: 'Azure CLI - build and deploy Python Function'
+  inputs:
+    azureSubscription: '95f820e9-6862-4f39-85ce-b0c2d34e9a61'
+
+    scriptLocation: inlineScript
+
+    inlineScript: |
+     # Functions source
+     wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
+     sudo dpkg -i packages-microsoft-prod.deb
+     
+     # Python 3.7 package for Ubuntu 16.04
+     sudo add-apt-repository ppa:deadsnakes/ppa
+     
+     # Update packages list
+     sudo apt-get update
+     
+     # Install Azure Functions Core Tools
+     sudo apt-get install azure-functions-core-tools
+     
+     # install Python3 and Virtual Environment support
+     sudo apt-get install python3.7
+     sudo apt-get install python3.7-venv
+     
+     # init Python venv 
+     python3.7 -m venv .env
+     source .env/bin/activate
+     
+     # Backup our source requirements.txt file
+     mv $(FunctionFolder)/requirements.txt  $(FunctionFolder)/requirements.orig.txt
+     
+     # Initialise Function environment locally so it sets runtime to Python
+     # Note: this also overwrites requirements.txt
+     func init $(FunctionFolder) --worker-runtime python
+     
+     # Delete the newly created requirements.txt file
+     rm $(FunctionFolder)/requirements.txt
+     
+     # Restore our original requirements.txt file
+     mv $(FunctionFolder)/requirements.orig.txt $(FunctionFolder)/requirements.txt
+     
+     # now install Functions extensions for Function
+     cd $(FunctionFolder)
+     func extensions install
+     
+     # deploy (uses Docker) - FunctionAppName should be an existing Linux Consumption App Plan
+     func azure functionapp publish $(FunctionAppName) --build-native-deps
