@@ -11,7 +11,7 @@ variables:
   azureSubscription: '2b0d1e37-01ae-4738-9b7f-24bc00279b0f'
 
   # Function app name
-  functionAppName: 'zyfun7'
+  functionAppName: 'zyfunc3'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
