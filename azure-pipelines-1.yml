@@ -12,7 +12,7 @@ steps:
 - task: AzureCLI@1
   displayName: 'Azure CLI - build and deploy Python Function'
   inputs:
-    azureSubscription: '95f820e9-6862-4f39-85ce-b0c2d34e9a61'
+    azureSubscription: '2b0d1e37-01ae-4738-9b7f-24bc00279b0f'
 
     scriptLocation: inlineScript
 
