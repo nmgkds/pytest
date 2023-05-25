@@ -1,1 +1,6 @@
-azure-functions
+kneed==0.8.2
+numpy==1.21.6
+pandas==1.4.2
+scikit-learn==1.2.2
+pyodbc==4.0.32
+sqlalchemy==1.4.32
